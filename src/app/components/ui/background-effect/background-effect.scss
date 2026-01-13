@@ -1,0 +1,12 @@
+/* Création d'un motif de grille de 40px par 40px */
+.bg-grid-pattern {
+  background-size: 50px 50px;
+  background-image: 
+    linear-gradient(to right, #00ff41 1px, transparent 1px),
+    linear-gradient(to bottom, #00ff41 1px, transparent 1px);
+}
+
+/* Optimisation pour éviter les lags lors du mouvement */
+div {
+  will-change: mask-image, background;
+}

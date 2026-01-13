@@ -1,0 +1,16 @@
+<div class="fixed inset-0 z-[-1] overflow-hidden pointer-events-none bg-geek-black">
+  
+  <div class="absolute inset-0 bg-grid-pattern opacity-[0.05]"></div>
+
+  <div 
+    class="absolute inset-0 transition-opacity duration-300"
+    [style.background]="'radial-gradient(600px circle at ' + mouseX() + 'px ' + mouseY() + 'px, rgba(0, 255, 65, 0.15), transparent 40%)'"
+  ></div>
+
+  <div 
+    class="absolute inset-0 bg-grid-pattern opacity-30"
+    [style.mask-image]="'radial-gradient(300px circle at ' + mouseX() + 'px ' + mouseY() + 'px, black, transparent)'"
+    [style.-webkit-mask-image]="'radial-gradient(300px circle at ' + mouseX() + 'px ' + mouseY() + 'px, black, transparent)'"
+  ></div>
+
+</div>

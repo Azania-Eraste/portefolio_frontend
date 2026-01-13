@@ -1,0 +1,74 @@
+<div class="min-h-screen bg-transparent p-6 md:p-12 font-mono text-gray-300">
+
+  <div class="mb-10 border-b border-geek-dim-green pb-4">
+    <h2 class="text-3xl text-geek-green font-bold">
+      <span class="animate-pulse">></span> LS PROJECTS_DIR
+    </h2>
+    <p class="text-sm text-gray-500 mt-2">Affichage des modules développés...</p>
+  </div>
+
+  <div class="flex flex-wrap gap-4 mb-12">
+    <button 
+      (click)="setFilter('ALL')"
+      [class.text-geek-green]="activeFilter() === 'ALL'"
+      [class.border-geek-green]="activeFilter() === 'ALL'"
+      class="px-4 py-2 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-widest text-sm">
+      [ ALL ]
+    </button>
+
+    <button 
+      (click)="setFilter('MOBILE')"
+      [class.text-geek-green]="activeFilter() === 'MOBILE'"
+      [class.border-geek-green]="activeFilter() === 'MOBILE'"
+      class="px-4 py-2 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-widest text-sm">
+      [ MOBILE_APPS ]
+    </button>
+
+    <button 
+      (click)="setFilter('WEB')"
+      [class.text-geek-green]="activeFilter() === 'WEB'"
+      [class.border-geek-green]="activeFilter() === 'WEB'"
+      class="px-4 py-2 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-widest text-sm">
+      [ WEB_DEV ]
+    </button>
+  </div>
+
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    
+    @for (projet of filteredProjects(); track projet.id) {
+      <div class="group relative bg-geek-gray border border-gray-800 hover:border-geek-green transition-colors duration-300 overflow-hidden flex flex-col h-full">
+        
+        <div class="h-48 overflow-hidden relative border-b border-gray-800">
+          <img [src]="projet.image" [alt]="projet.titre" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">
+          <div class="absolute inset-0 bg-green-900/10 mix-blend-overlay"></div>
+        </div>
+
+        <div class="p-6 flex flex-col flex-grow">
+          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-geek-green">
+            {{ projet.titre }}
+          </h3>
+          
+          <p class="text-sm text-gray-400 mb-6 flex-grow line-clamp-3">
+            {{ projet.resume }}
+          </p>
+
+          <div class="flex justify-between items-center mt-auto">
+            <span class="text-xs text-geek-dim-green border border-geek-dim-green px-2 py-1 rounded">
+              ID: {{ projet.id }}
+            </span>
+            
+            <a [href]="projet.lien" target="_blank" class="text-white hover:text-geek-green hover:underline decoration-geek-green underline-offset-4 text-sm">
+              VIEW_SOURCE >
+            </a>
+          </div>
+        </div>
+        
+      </div>
+    } @empty {
+      <div class="col-span-full text-center py-20 text-gray-600">
+        <p>> No modules found in this category.</p>
+      </div>
+    }
+
+  </div>
+</div>

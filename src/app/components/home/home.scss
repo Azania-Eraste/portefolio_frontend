@@ -1,0 +1,15 @@
+@keyframes scan {
+  0% { top: -10%; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { top: 110%; opacity: 0; }
+}
+
+.animate-scan {
+  animation: scan 3s linear infinite;
+}
+
+/* Ombre Verte Néon */
+.shadow-green {
+  text-shadow: 0 0 10px rgba(0, 255, 65, 0.4);
+}

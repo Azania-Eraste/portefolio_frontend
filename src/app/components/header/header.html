@@ -1,0 +1,80 @@
+<header class="fixed top-0 left-0 w-full z-50 bg-transparent/95 backdrop-blur-sm border-b border-gray-800 font-mono text-sm">
+  
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+      
+      <div class="flex-shrink-0">
+        <a routerLink="/" class="text-xl font-bold tracking-tighter hover:text-geek-green transition-colors">
+          <span class="text-geek-green">~/</span>portfolio
+        </a>
+      </div>
+
+      <div class="hidden md:block">
+        <div class="ml-10 flex items-baseline space-x-8">
+          
+          <a routerLink="/" 
+             routerLinkActive="text-geek-green border-b border-geek-green" 
+             [routerLinkActiveOptions]="{exact: true}"
+             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
+             ./home
+          </a>
+
+          <a routerLink="/projets" 
+             routerLinkActive="text-geek-green border-b border-geek-green"
+             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
+             ./projects.sh
+          </a>
+
+          <a routerLink="/experiences" 
+             routerLinkActive="text-geek-green border-b border-geek-green"
+             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
+             ./career.log
+          </a>
+
+          <a routerLink="/contact" 
+             routerLinkActive="text-geek-blue border-b border-geek-blue"
+             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
+                ./contact
+          </a>
+
+        </div>
+      </div>
+
+      <div class="-mr-2 flex md:hidden">
+        <button (click)="toggleMenu()" class="inline-flex items-center justify-center p-2 text-geek-green hover:text-white focus:outline-none">
+          <span class="sr-only">Open menu</span>
+          <span class="text-xl font-bold">
+            {{ isMobileMenuOpen() ? '[ X ]' : '[ = ]' }}
+          </span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  @if (isMobileMenuOpen()) {
+    <div class="md:hidden bg-geek-gray border-b border-geek-dim-green">
+      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        
+        <a routerLink="/" (click)="closeMenu()"
+           routerLinkActive="text-geek-green bg-black/30"
+           [routerLinkActiveOptions]="{exact: true}"
+           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+           > cd ./home
+        </a>
+
+        <a routerLink="/projets" (click)="closeMenu()"
+           routerLinkActive="text-geek-green bg-black/30"
+           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+           > ./execute_projects.sh
+        </a>
+
+        <a routerLink="/experiences" (click)="closeMenu()"
+           routerLinkActive="text-geek-green bg-black/30"
+           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+           > cat ./career.log
+        </a>
+
+      </div>
+    </div>
+  }
+</header>

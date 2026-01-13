@@ -1,1 +1,31 @@
-/* You can add global styles to this file, and also import other style files */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+/* Import des styles Leaflet */
+@import 'leaflet/dist/leaflet.css';
+
+/* ... tes imports Tailwind suivent ... */
+
+body, html {
+    height: 100%;
+    margin: 0;
+    background-color: transparent;
+    color: #e5e5e5;
+    font-family: 'Courier New', Courier, monospace;
+}
+
+/* Scrollbar VERTE */
+::-webkit-scrollbar {
+    width: 8px;
+}
+::-webkit-scrollbar-track {
+    background: #0a0a0a;
+}
+::-webkit-scrollbar-thumb {
+    background: #008F11; /* geek-dim-green */
+    border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+    background: #00ff41; /* geek-green */
+}
+
