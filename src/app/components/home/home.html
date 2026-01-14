@@ -74,7 +74,7 @@
 
             <div class="w-full h-full overflow-hidden grayscale contrast-125 brightness-90 group-hover:grayscale-0 transition-all duration-700 relative">
                @if (profile.photo_profil) {
-                  <img [src]="getDriveImage(user()?.photo_profil)" alt="Avatar" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
+                  <img [src]="getDriveImage(user()?.photo_profil)" referrerpolicy="no-referrer" alt="Avatar" class="w-full h-full object-cover opacity-80 group-hover:opacity-100">
                } @else {
                   <div class="w-full h-full bg-geek-gray flex items-center justify-center border border-gray-800">
                     <span class="text-4xl text-gray-700">?</span>
