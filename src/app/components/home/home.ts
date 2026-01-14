@@ -63,6 +63,7 @@ export class HomeComponent implements OnInit {
       try {
         const id = url.split('/file/d/')[1].split('/')[0];
         // Note: "export=view" est mieux pour les images que "download"
+        console.log('uri:', `https://drive.google.com/uc?export=view&id=${id}`);
         return `https://drive.google.com/uc?export=view&id=${id}`;
       } catch (e) {
         return url;
