@@ -50,27 +50,39 @@ export class HomeComponent implements OnInit {
   // Dans home.component.ts
 
   getDriveImage(url: string | null | undefined): string {
-    if (!url) return 'assets/default-avatar.png'; // Image par défaut si vide
+    // Sécurité de base
+    if (!url) return 'assets/default-avatar.png';
 
-    // Si c'est déjà un lien direct (ex: LinkedIn, Imgur...), on le retourne tel quel
+    // Si c'est déjà un lien direct externe (LinkedIn, etc.), on ne touche pas
     if (!url.includes('drive.google.com')) {
       return url;
     }
 
-    // Si c'est un lien Drive, on le transforme pour l'affichage (export=view)
-    if (url.includes('/file/d/')) {
-      console.log('Transformation du lien Drive pour affichage:', url);
-      try {
-        const id = url.split('/file/d/')[1].split('/')[0];
-        // Note: "export=view" est mieux pour les images que "download"
-        console.log('uri:', `https://drive.google.com/uc?export=view&id=${id}`);
-        return `https://drive.google.com/uc?export=view&id=${id}`;
-      } catch (e) {
-        return url;
-      }
+    // Extraction de l'ID (marche pour les liens /file/d/ et /open?id=)
+    let id = '';
+    try {
+      // Cas 1: https://drive.google.com/file/d/MON_ID/view...
+      if (url.includes('/file/d/')) {
+        id = url.split('/file/d/')[1].split('/')[0];
+      } 
+      // Cas 2: https://drive.google.com/open?id=MON_ID
+    else if (url.includes('id=')) {
+      const params = new URLSearchParams(url.split('?')[1]);
+      id = params.get('id') || '';
     }
-    return url;
+  } catch (e) {
+    console.error("Erreur extraction ID Drive", e);
+    return 'assets/default-avatar.png';
   }
+
+  if (id) {
+    // C'EST ICI LA MAGIE : Le format lh3.googleusercontent.com/d/
+    // Ce lien donne le fichier brut directement, sans redirection complexe
+    return `https://lh3.googleusercontent.com/d/${id}`;
+  }
+
+  return 'assets/default-avatar.png';
+}
 
 
   loadProfile() {
