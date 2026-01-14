@@ -27,7 +27,7 @@ export class S_UserService {
         // 4. Correction ici : setTimeout prend un nombre, pas "800ms"
         setTimeout(() => {
            this.isProfileLoaded.set(true);
-        }, 800); // Juste le chiffre 800 (millisecondes)
+        }, 1000); // Juste le chiffre 800 (millisecondes)
       })
     );
   }
