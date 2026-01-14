@@ -52,7 +52,7 @@ export class HomeComponent implements OnInit {
     this.api.getProfile().subscribe({
       next: (users) => {
         if (users && users.length > 0) {
-          const profile = users[2];
+          const profile = users[4];
           console.log('Profil utilisateur chargé:', profile);
           console.log('photo Profil utilisateur chargé:', profile.photo_profil);
           // --- FIX IMAGE CASSÉE ---
