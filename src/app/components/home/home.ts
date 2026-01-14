@@ -47,6 +47,29 @@ export class HomeComponent implements OnInit {
     return url;
 }
 
+  // Dans home.component.ts
+
+  getDriveImage(url: string | null | undefined): string {
+    if (!url) return 'assets/default-avatar.png'; // Image par défaut si vide
+
+    // Si c'est déjà un lien direct (ex: LinkedIn, Imgur...), on le retourne tel quel
+    if (!url.includes('drive.google.com')) {
+      return url;
+    }
+
+    // Si c'est un lien Drive, on le transforme pour l'affichage (export=view)
+    if (url.includes('/file/d/')) {
+      try {
+        const id = url.split('/file/d/')[1].split('/')[0];
+        // Note: "export=view" est mieux pour les images que "download"
+        return `https://drive.google.com/uc?export=view&id=${id}`;
+      } catch (e) {
+        return url;
+      }
+    }
+    return url;
+  }
+
 
   loadProfile() {
     this.api.getProfile().subscribe({
@@ -57,16 +80,16 @@ export class HomeComponent implements OnInit {
           console.log('photo Profil utilisateur chargé:', profile.photo_profil);
           // --- FIX IMAGE CASSÉE ---
           // Si l'image existe et ne commence pas par 'http' (donc c'est un chemin local)
-          if (profile.photo_profil && !profile.photo_profil.startsWith('http')) {
-             // On récupère la racine du serveur (ex: http://127.0.0.1:8000)
-             // En retirant '/api' de Base.url
-             const serverRoot = Api.url.replace('/api/v1', '');
-             console.log('Server Root:', serverRoot);
-             // On reconstruit l'URL complète
-             profile.photo_profil = serverRoot + profile.photo_profil;
-             console.log('URL complète de la photo de profil:', profile.photo_profil);
-          }
-          // ------------------------
+          // if (profile.photo_profil && !profile.photo_profil.startsWith('http')) {
+          //    // On récupère la racine du serveur (ex: http://127.0.0.1:8000)
+          //    // En retirant '/api' de Base.url
+          //    const serverRoot = Api.url.replace('/api/v1', '');
+          //    console.log('Server Root:', serverRoot);
+          //    // On reconstruit l'URL complète
+          //    profile.photo_profil = serverRoot + profile.photo_profil;
+          //    console.log('URL complète de la photo de profil:', profile.photo_profil);
+          // }
+          // // ------------------------
 
           this.user.set(profile);
           this.startTypewriter(profile.description || "Développeur Fullstack.");
