@@ -59,6 +59,7 @@ export class HomeComponent implements OnInit {
 
     // Si c'est un lien Drive, on le transforme pour l'affichage (export=view)
     if (url.includes('/file/d/')) {
+      console.log('Transformation du lien Drive pour affichage:', url);
       try {
         const id = url.split('/file/d/')[1].split('/')[0];
         // Note: "export=view" est mieux pour les images que "download"
@@ -77,19 +78,7 @@ export class HomeComponent implements OnInit {
         if (users && users.length > 0) {
           const profile = users[1];
           console.log('Profil utilisateur chargé:', profile);
-          console.log('photo Profil utilisateur chargé:', profile.photo_profil);
-          // --- FIX IMAGE CASSÉE ---
-          // Si l'image existe et ne commence pas par 'http' (donc c'est un chemin local)
-          // if (profile.photo_profil && !profile.photo_profil.startsWith('http')) {
-          //    // On récupère la racine du serveur (ex: http://127.0.0.1:8000)
-          //    // En retirant '/api' de Base.url
-          //    const serverRoot = Api.url.replace('/api/v1', '');
-          //    console.log('Server Root:', serverRoot);
-          //    // On reconstruit l'URL complète
-          //    profile.photo_profil = serverRoot + profile.photo_profil;
-          //    console.log('URL complète de la photo de profil:', profile.photo_profil);
-          // }
-          // // ------------------------
+          
 
           this.user.set(profile);
           this.startTypewriter(profile.description || "Développeur Fullstack.");
