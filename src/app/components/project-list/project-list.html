@@ -36,7 +36,7 @@
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
     
     @for (projet of filteredProjects(); track projet.id) {
-      <div class="group relative bg-geek-gray border border-gray-800 hover:border-geek-green transition-colors duration-300 overflow-hidden flex flex-col h-full">
+      <div class="group relative glass-card bg-geek-gray border border-gray-800 hover:border-geek-green transition-colors duration-300 overflow-hidden flex flex-col h-full">
         
         <div class="h-48 overflow-hidden relative border-b border-gray-800">
           <img [src]="projet.image" [alt]="projet.titre" class="w-full h-full object-cover opacity-80 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500">

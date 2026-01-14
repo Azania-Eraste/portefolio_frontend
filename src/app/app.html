@@ -1,7 +1,13 @@
 <app-background-effect></app-background-effect>
 
+@if (!userService.isProfileLoaded()) {
+  <app-loading></app-loading>
+}
+
 <app-header></app-header>
 
 <main class="pt-16 min-h-screen">
   <router-outlet></router-outlet>
+  
+  <div class="custom-cursor" [style.left.px]="mouseX" [style.top.px]="mouseY"></div>
 </main>

@@ -14,18 +14,74 @@ body, html {
     font-family: 'Courier New', Courier, monospace;
 }
 
-/* Scrollbar VERTE */
-::-webkit-scrollbar {
-    width: 8px;
+h1, h2, h3, .techno-badge {
+  font-family: 'JetBrains Mono', monospace;
 }
-::-webkit-scrollbar-track {
-    background: #0a0a0a;
-}
-::-webkit-scrollbar-thumb {
-    background: #008F11; /* geek-dim-green */
-    border-radius: 4px;
-}
-::-webkit-scrollbar-thumb:hover {
-    background: #00ff41; /* geek-green */
+p, span, li {
+  font-family: 'Inter', sans-serif;
 }
 
+/* Largeur de la barre */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+/* Le fond de la barre (rail) */
+::-webkit-scrollbar-track {
+  background: #0f172a; /* Bleu très foncé (couleur de fond du site) */
+}
+
+/* La partie qui bouge (thumb) */
+::-webkit-scrollbar-thumb {
+  background: #334155; /* Gris bleuté */
+  border-radius: 4px;
+}
+
+/* Au survol */
+::-webkit-scrollbar-thumb:hover {
+  background: #10b981; /* Vert émeraude au survol */
+}
+
+/* Dans ton fichier styles.css ou le CSS du composant */
+.glass-card {
+  background: rgba(255, 255, 255, 0.05); /* Très transparent */
+  backdrop-filter: blur(10px); /* Le flou magique */
+  border: 1px solid rgba(255, 255, 255, 0.1); /* Bordure subtile */
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5); /* Ombre douce */
+  border-radius: 16px;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+/* Effet au survol */
+.glass-card:hover {
+  transform: translateY(-5px); /* La carte monte un peu */
+  box-shadow: 0 10px 40px rgba(0, 255, 127, 0.2); /* Lueur verte au survol */
+  border-color: rgba(0, 255, 127, 0.5);
+}
+
+/* On cache le vrai curseur par défaut (Optionnel, mais plus immersif) */
+body {
+  cursor: none; 
+}
+
+/* Le style du nouveau curseur */
+.custom-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  pointer-events: none; /* TRÈS IMPORTANT : permet de cliquer au travers */
+  transform: translate(-50%, -50%); /* Pour centrer le cercle sur la pointe */
+  z-index: 9999; /* Toujours au dessus */
+  mix-blend-mode: difference; /* L'effet magique d'inversion des couleurs */
+  transition: width 0.2s, height 0.2s; /* Animation fluide si on veut le grossir */
+}
+
+/* On remet le curseur normal pour les liens si on veut, 
+   ou on agrandit le cercle (voir étape 3) */
+a:hover ~ .custom-cursor, button:hover ~ .custom-cursor {
+  transform: translate(-50%, -50%) scale(1.5);
+}
