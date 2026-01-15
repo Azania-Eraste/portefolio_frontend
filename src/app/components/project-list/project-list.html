@@ -8,6 +8,7 @@
   </div>
 
   <div class="flex flex-wrap gap-4 mb-12">
+    <!-- Bouton ALL -->
     <button 
       (click)="setFilter('ALL')"
       [class.text-geek-green]="activeFilter() === 'ALL'"
@@ -16,21 +17,16 @@
       [ ALL ]
     </button>
 
-    <button 
-      (click)="setFilter('MOBILE')"
-      [class.text-geek-green]="activeFilter() === 'MOBILE'"
-      [class.border-geek-green]="activeFilter() === 'MOBILE'"
-      class="px-4 py-2 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-widest text-sm">
-      [ MOBILE_APPS ]
-    </button>
-
-    <button 
-      (click)="setFilter('WEB')"
-      [class.text-geek-green]="activeFilter() === 'WEB'"
-      [class.border-geek-green]="activeFilter() === 'WEB'"
-      class="px-4 py-2 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-widest text-sm">
-      [ WEB_DEV ]
-    </button>
+    <!-- Boutons dynamiques depuis le backend -->
+    @for (type of projectTypes(); track type.key) {
+      <button 
+        (click)="setFilter(type.key)"
+        [class.text-geek-green]="activeFilter() === type.key"
+        [class.border-geek-green]="activeFilter() === type.key"
+        class="px-4 py-2 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-widest text-sm">
+        [ {{ type.key }} ]
+      </button>
+    }
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">

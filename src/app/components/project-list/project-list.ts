@@ -1,6 +1,6 @@
 import { Component, OnInit, inject, signal, computed } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { IProject } from '../../shared/models';
+import { IProject, IProjectType } from '../../shared/models';
 import { S_ProjectService } from '../../shared/services/S_Project.service';
 
 @Component({
@@ -16,6 +16,9 @@ export class ProjectListComponent implements OnInit {
   // 1. Signal contenant TOUS les projets (données brutes)
   projects = signal<IProject[]>([]);
 
+  // Types de projet exposés par le backend
+  projectTypes = signal<IProjectType[]>([]);
+
   // 2. Signal contenant le filtre actif (par défaut 'ALL')
   activeFilter = signal<string>('ALL');
 
@@ -28,21 +31,13 @@ export class ProjectListComponent implements OnInit {
       return allProjects;
     }
 
-    // Filtrage par mot-clé dans le titre ou le résumé
-    return allProjects.filter(p => {
-      const content = (p.titre + ' ' + p.resume).toUpperCase();
-      
-      // Logique de mapping des filtres
-      if (filter === 'MOBILE') return content.includes('FLUTTER') || content.includes('ANDROID') || content.includes('IOS');
-      if (filter === 'WEB') return content.includes('ANGULAR') || content.includes('DJANGO') || content.includes('REACT');
-      if (filter === 'BACKEND') return content.includes('PYTHON') || content.includes('API') || content.includes('SQL');
-      
-      return true;
-    });
+    // Filtrage par type_de_projet
+    return allProjects.filter(p => p.type_de_projet === filter);
   });
 
   ngOnInit() {
     this.loadProjects();
+    this.loadProjectTypes();
   }
 
   loadProjects() {
@@ -57,5 +52,12 @@ export class ProjectListComponent implements OnInit {
   // Méthode appelée par les boutons HTML
   setFilter(category: string) {
     this.activeFilter.set(category);
+  }
+
+  loadProjectTypes() {
+    this.projectService.getProjectTypes().subscribe({
+      next: (types) => this.projectTypes.set(types),
+      error: (err) => console.error('Erreur chargement types de projet', err)
+    });
   }
 }
