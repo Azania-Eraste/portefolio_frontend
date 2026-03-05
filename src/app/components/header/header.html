@@ -31,6 +31,12 @@
              ./career.log
           </a>
 
+          <a routerLink="/skills" 
+             routerLinkActive="text-geek-green border-b border-geek-green"
+             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
+             ./skills
+          </a>
+
           <a routerLink="/contact" 
              routerLinkActive="text-geek-blue border-b border-geek-blue"
              class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
@@ -72,6 +78,18 @@
            routerLinkActive="text-geek-green bg-black/30"
            class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
            > cat ./career.log
+        </a>
+
+        <a routerLink="/skills" (click)="closeMenu()"
+           routerLinkActive="text-geek-green bg-black/30"
+           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+           > ./skills
+        </a>
+
+        <a routerLink="/contact" (click)="closeMenu()"
+           routerLinkActive="text-geek-blue bg-black/30"
+           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
+           > query ./contact
         </a>
 
       </div>

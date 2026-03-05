@@ -1,0 +1,71 @@
+<div class="min-h-screen bg-transparent p-6 md:p-12 font-mono text-gray-300">
+
+  <div class="mb-12">
+    <h2 class="text-3xl text-geek-green font-bold mb-2">
+      <span class="animate-pulse">></span> SKILL_MATRIX.LOAD()
+    </h2>
+    <p class="text-sm text-gray-500">Inventaire des compétences techniques et linguistiques...</p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="text-geek-green animate-pulse">
+      > Initializing skill database...
+      <br>
+      > Loading language modules...
+    </div>
+  }
+
+  @if (error()) {
+    <div class="text-red-500 border border-red-700 bg-red-900/20 p-4 rounded">
+      > ERROR: {{ error() }}
+    </div>
+  }
+
+  @if (!isLoading() && skills().length === 0) {
+    <div class="text-gray-400 italic">
+      > No skills found in database...
+    </div>
+  }
+
+  @if (!isLoading() && skills().length > 0) {
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+      @for (skill of skills(); track skill.id) {
+        <div class="group relative glass-card bg-geek-gray border border-gray-800 hover:border-geek-green transition-all duration-300 p-6 rounded overflow-hidden">
+          
+          <!-- Background effect -->
+          <div class="absolute inset-0 bg-green-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          
+          <!-- Content -->
+          <div class="relative z-10">
+            <div class="flex items-center mb-4">
+              <div class="w-2 h-2 bg-geek-green rounded-full mr-3"></div>
+              <h3 class="text-lg font-bold text-white group-hover:text-geek-green transition-colors duration-300">
+                {{ skill.nom }}
+              </h3>
+            </div>
+
+            <!-- Skill ID -->
+            <div class="text-xs text-gray-500 font-mono mb-3">
+              > [ID: {{ skill.id }}]
+            </div>
+
+            <!-- Hover effect -->
+            <div class="h-1 w-0 bg-gradient-to-r from-geek-green to-transparent group-hover:w-full transition-all duration-500"></div>
+          </div>
+        </div>
+      }
+    </div>
+
+    <!-- Statistics -->
+    <div class="mt-12 border-t border-gray-800 pt-8">
+      <div class="text-sm text-gray-500">
+        > SKILL_COUNT: {{ skills().length }}
+        <br>
+        > STATUS: LOADED
+        <br>
+        > CACHE_TIMESTAMP: {{ 'now' | date: 'HH:mm:ss' }}
+      </div>
+    </div>
+  }
+
+</div>

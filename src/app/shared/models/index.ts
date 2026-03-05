@@ -6,3 +6,5 @@ export * from './I_Project.model';
 export * from './I_ProjectType.model';
 export * from './I_Social.model';
 export * from './I_Contact.model';
+export * from './I_Language.model';
+export * from './I_Competence.model';

@@ -48,6 +48,29 @@
             {{ projet.resume }}
           </p>
 
+          <!-- Compétences requises -->
+          @if (projet.competences && projet.competences.length > 0) {
+            <div class="mb-6 pb-6 border-b border-gray-700">
+              <p class="text-xs text-gray-500 mb-3 uppercase tracking-widest">Compétences:</p>
+              <div class="flex flex-wrap gap-2">
+                @for (competence of projet.competences.slice(0, 5); track competence.id) {
+                  <div class="flex items-center gap-2 px-2 py-1 bg-geek-gray/80 border border-gray-700 rounded text-xs group-hover:border-geek-green transition-colors">
+                    @if (competence.icone_url) {
+                      <img [src]="competence.icone_url" [alt]="competence.nom" class="w-4 h-4 object-contain">
+                    }
+                    <span class="text-gray-300">{{ competence.nom }}</span>
+                    <span class="text-gray-500 text-xs">({{ competence.niveau_display || competence.niveau }})</span>
+                  </div>
+                }
+                @if (projet.competences.length > 5) {
+                  <div class="text-xs text-gray-500 px-2 py-1">
+                    +{{ projet.competences.length - 5 }} more
+                  </div>
+                }
+              </div>
+            </div>
+          }
+
           <div class="flex justify-between items-center mt-auto">
             <span class="text-xs text-geek-dim-green border border-geek-dim-green px-2 py-1 rounded">
               ID: {{ projet.id }}
