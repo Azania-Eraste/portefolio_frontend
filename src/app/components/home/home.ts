@@ -88,7 +88,7 @@ export class HomeComponent implements OnInit {
     this.api.getProfile().subscribe({
       next: (users) => {
         if (users && users.length > 0) {
-          const profile = users[1];
+          const profile = users[0];
           console.log('Profil utilisateur chargé:', profile);
           
 
