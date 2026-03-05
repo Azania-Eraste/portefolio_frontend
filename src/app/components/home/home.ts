@@ -3,7 +3,6 @@ import { CommonModule } from '@angular/common';
 import { S_UserService } from '../../shared/services/S_User.service';
 import { IUser } from '../../shared/models';
 import { RouterModule } from '@angular/router';
-import { Api } from '../../shared/based/api';
 
 @Component({
   selector: 'app-home',
@@ -94,6 +93,7 @@ export class HomeComponent implements OnInit {
           
 
           this.user.set(profile);
+          this.typedText.set('');
           this.startTypewriter(profile.description || "Développeur Fullstack.");
         }
         else {
