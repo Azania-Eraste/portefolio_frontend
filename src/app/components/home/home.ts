@@ -1,7 +1,8 @@
 import { Component, OnInit, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { S_UserService } from '../../shared/services/S_User.service';
-import { IUser } from '../../shared/models';
+import { S_SocialService } from '../../shared/services/S_Social.service';
+import { IUser, ISocial } from '../../shared/models';
 import { RouterModule } from '@angular/router';
 
 @Component({
@@ -13,14 +14,17 @@ import { RouterModule } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
   private api = inject(S_UserService);
+  private socialService = inject(S_SocialService);
   
   // Signaux pour gérer l'état
   user = signal<IUser | null>(null);
+  socials = signal<ISocial[]>([]);
   typedText = signal<string>(''); // Le texte qui s'écrit petit à petit
   isCursorBlinking = signal<boolean>(true);
 
   ngOnInit() {
     this.loadProfile();
+    this.loadSocials();
   }
 
   // ... imports existants
@@ -122,5 +126,32 @@ export class HomeComponent implements OnInit {
         this.isCursorBlinking.set(true); // Curseur clignote à la fin
       }
     }, speed);
+  }
+
+  loadSocials() {
+    this.socialService.getAllSocials().subscribe({
+      next: (data) => {
+        console.log('Réseaux sociaux chargés:', data);
+        this.socials.set(data);
+      },
+      error: (err) => {
+        console.error('Erreur chargement réseaux sociaux:', err);
+      }
+    });
+  }
+
+  getSocialIcon(platform: string): string {
+    const platformLower = platform.toLowerCase();
+    
+    if (platformLower.includes('linkedin')) return '💼';
+    if (platformLower.includes('github')) return '🐙';
+    if (platformLower.includes('twitter') || platformLower.includes('x.com')) return '🐦';
+    if (platformLower.includes('facebook')) return '👤';
+    if (platformLower.includes('instagram')) return '📷';
+    if (platformLower.includes('youtube')) return '▶️';
+    if (platformLower.includes('portfolio') || platformLower.includes('website')) return '🌐';
+    if (platformLower.includes('email') || platformLower.includes('mail')) return '✉️';
+    
+    return '🔗';
   }
 }

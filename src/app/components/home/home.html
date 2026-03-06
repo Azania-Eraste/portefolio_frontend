@@ -100,6 +100,32 @@
             </div>
           </div>
 
+          <!-- Réseaux sociaux -->
+          @if (socials().length > 0) {
+            <div class="mt-8 w-full max-w-xs">
+              <div class="text-xs text-gray-500 mb-3 uppercase tracking-widest border-b border-gray-800 pb-2">
+                > CONNECT_NETWORK
+              </div>
+              <div class="flex flex-wrap gap-3 justify-center">
+                @for (social of socials(); track social.id) {
+                  <a 
+                    [href]="social.lien" 
+                    target="_blank"
+                    [title]="social.nom_plateforme"
+                    class="group relative w-10 h-10 border border-gray-700 hover:border-geek-green flex items-center justify-center transition-all duration-300 hover:bg-geek-green/10"
+                  >
+                    <span class="text-lg group-hover:scale-110 transition-transform duration-300">
+                      {{ getSocialIcon(social.nom_plateforme) }}
+                    </span>
+                    <div class="absolute -bottom-8 left-1/2 -translate-x-1/2 bg-black border border-geek-green px-2 py-1 text-xs whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none z-30">
+                      {{ social.nom_plateforme }}
+                    </div>
+                  </a>
+                }
+              </div>
+            </div>
+          }
+
         }
       </div>
 

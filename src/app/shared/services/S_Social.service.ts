@@ -9,7 +9,7 @@ import { ISocial } from '../models';
 })
 export class S_SocialService {
   private http = inject(HttpClient);
-  private endpoint = `${Api.url}/reseaux_sociaux/`; 
+  private endpoint = `${Api.url}/reseaux/`; 
 
   getAllSocials(): Observable<ISocial[]> {
     return this.http.get<ISocial[]>(this.endpoint);
