@@ -7,11 +7,33 @@
     <p class="text-sm text-gray-500">Inventaire des compétences techniques et linguistiques...</p>
   </div>
 
+  <div class="flex flex-wrap gap-3 mb-8">
+    <button
+      (click)="setCategory('ALL')"
+      [class.text-geek-green]="activeCategory() === 'ALL'"
+      [class.border-geek-green]="activeCategory() === 'ALL'"
+      class="px-3 py-1 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-wider text-xs"
+    >
+      [ ALL ]
+    </button>
+
+    @for (category of categories(); track category.key) {
+      <button
+        (click)="setCategory(category.key)"
+        [class.text-geek-green]="activeCategory() === category.key"
+        [class.border-geek-green]="activeCategory() === category.key"
+        class="px-3 py-1 border border-gray-700 hover:border-geek-green hover:text-geek-green transition-all duration-300 uppercase tracking-wider text-xs"
+      >
+        [ {{ category.label }} ]
+      </button>
+    }
+  </div>
+
   @if (isLoading()) {
     <div class="text-geek-green animate-pulse">
       > Initializing skill database...
       <br>
-      > Loading language modules...
+      > Loading competence modules...
     </div>
   }
 
@@ -39,6 +61,9 @@
           <div class="relative z-10">
             <div class="flex items-center mb-4">
               <div class="w-2 h-2 bg-geek-green rounded-full mr-3"></div>
+              @if (skill.icone_url) {
+                <img [src]="skill.icone_url" [alt]="skill.nom" class="w-5 h-5 object-contain mr-2">
+              }
               <h3 class="text-lg font-bold text-white group-hover:text-geek-green transition-colors duration-300">
                 {{ skill.nom }}
               </h3>
@@ -48,6 +73,20 @@
             <div class="text-xs text-gray-500 font-mono mb-3">
               > [ID: {{ skill.id }}]
             </div>
+
+            <div class="text-xs text-gray-400 font-mono mb-2">
+              > CATEGORY: {{ skill.categorie_display || skill.categorie }}
+            </div>
+
+            <div class="text-xs text-gray-400 font-mono mb-4">
+              > LEVEL: {{ skill.niveau_display || skill.niveau }}
+            </div>
+
+            @if (skill.description) {
+              <p class="text-sm text-gray-400 mb-4 line-clamp-3">
+                {{ skill.description }}
+              </p>
+            }
 
             <!-- Hover effect -->
             <div class="h-1 w-0 bg-gradient-to-r from-geek-green to-transparent group-hover:w-full transition-all duration-500"></div>
