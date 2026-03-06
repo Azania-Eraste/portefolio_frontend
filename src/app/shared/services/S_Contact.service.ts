@@ -9,7 +9,7 @@ import { IContact } from '../models';
 })
 export class S_ContactService {
   private http = inject(HttpClient);
-  private endpoint = `${Api.url}/contact/`;
+  private endpoint = `${Api.url}/contacts/`;
 
   sendMessage(payload: IContact): Observable<any> {
     return this.http.post(this.endpoint, payload);
