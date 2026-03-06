@@ -45,6 +45,7 @@ export class SkillListComponent implements OnInit {
 
     request$.subscribe({
       next: (data) => {
+        console.log('Compétences chargées:', data);
         this.skills.set(data);
         this.isLoading.set(false);
       },

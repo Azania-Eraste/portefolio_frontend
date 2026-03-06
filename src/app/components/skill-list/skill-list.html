@@ -52,7 +52,7 @@
   @if (!isLoading() && skills().length > 0) {
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       @for (skill of skills(); track skill.id) {
-        <div class="group relative glass-card bg-geek-gray border border-gray-800 hover:border-geek-green transition-all duration-300 p-6 rounded overflow-hidden">
+        <div class="group relative bg-[#1a1a1a] border border-gray-800 hover:border-geek-green transition-all duration-300 p-6 rounded overflow-hidden">
           
           <!-- Background effect -->
           <div class="absolute inset-0 bg-green-900/5 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -60,9 +60,9 @@
           <!-- Content -->
           <div class="relative z-10">
             <div class="flex items-center mb-4">
-              <div class="w-2 h-2 bg-geek-green rounded-full mr-3"></div>
+              <div class="w-2 h-2 bg-geek-green rounded-full mr-3 flex-shrink-0"></div>
               @if (skill.icone_url) {
-                <img [src]="skill.icone_url" [alt]="skill.nom" class="w-5 h-5 object-contain mr-2">
+                <img [src]="skill.icone_url" [alt]="skill.nom" class="w-5 h-5 object-contain mr-2 flex-shrink-0">
               }
               <h3 class="text-lg font-bold text-white group-hover:text-geek-green transition-colors duration-300">
                 {{ skill.nom }}
@@ -70,20 +70,20 @@
             </div>
 
             <!-- Skill ID -->
-            <div class="text-xs text-gray-500 font-mono mb-3">
+            <div class="text-xs text-gray-400 font-mono mb-3">
               > [ID: {{ skill.id }}]
             </div>
 
-            <div class="text-xs text-gray-400 font-mono mb-2">
-              > CATEGORY: {{ skill.categorie_display || skill.categorie }}
+            <div class="text-xs text-gray-300 font-mono mb-2">
+              > CATEGORY: <span class="text-geek-green">{{ skill.categorie_display || skill.categorie }}</span>
             </div>
 
-            <div class="text-xs text-gray-400 font-mono mb-4">
-              > LEVEL: {{ skill.niveau_display || skill.niveau }}
+            <div class="text-xs text-gray-300 font-mono mb-4">
+              > LEVEL: <span class="text-geek-green">{{ skill.niveau_display || skill.niveau }}</span>
             </div>
 
             @if (skill.description) {
-              <p class="text-sm text-gray-400 mb-4 line-clamp-3">
+              <p class="text-sm text-gray-300 mb-4 line-clamp-3">
                 {{ skill.description }}
               </p>
             }
