@@ -1,4 +1,4 @@
-import { Component, HostListener, inject } from '@angular/core';
+import { Component, HostListener, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { S_UserService } from './shared/services/S_User.service'; // Vérifie le chemin
@@ -14,12 +14,28 @@ import { BackgroundEffectComponent } from './components/ui/background-effect/bac
   templateUrl: './app.html',
   styleUrls: ['./app.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   // 1. On injecte le service dans une variable PUBLIQUE
   public userService = inject(S_UserService);
 
   mouseX = 0;
   mouseY = 0;
+
+  ngOnInit() {
+    // Charge les données utilisateur au démarrage de l'application
+    this.loadUserData();
+  }
+
+  private loadUserData() {
+    this.userService.getProfile().subscribe({
+      next: (users) => {
+        console.log('Utilisateur(s) chargé(s) au démarrage:', users);
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement des utilisateurs:', err);
+      }
+    });
+  }
 
   // Gestion du curseur
   @HostListener('document:mousemove', ['$event'])

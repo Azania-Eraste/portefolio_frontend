@@ -89,6 +89,17 @@ export class HomeComponent implements OnInit {
 
 
   loadProfile() {
+    // Vérifie d'abord si les données sont déjà chargées dans le service
+    const cachedUser = this.api.currentUser();
+    if (cachedUser) {
+      console.log('Utilisation du profil en cache:', cachedUser);
+      this.user.set(cachedUser);
+      this.typedText.set('');
+      this.startTypewriter(cachedUser.description || "Développeur Fullstack.");
+      return;
+    }
+
+    // Sinon, charge depuis l'API
     this.api.getProfile().subscribe({
       next: (users) => {
         if (users && users.length > 0) {

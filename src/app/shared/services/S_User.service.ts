@@ -15,15 +15,21 @@ export class S_UserService {
   // 2. Définition propre de l'URL
   private endpoint = `${Api.url}/utilisateurs/`;
 
-  // 3. Le Signal d'état de chargement
+  // 3. Signaux pour l'état
   isProfileLoaded = signal<boolean>(false);
+  currentUser = signal<IUser | null>(null);
+  users = signal<IUser[]>([]);
 
   constructor() { }
 
   getProfile(): Observable<IUser[]> {
     // On utilise this.endpoint pour être propre
     return this.http.get<IUser[]>(this.endpoint).pipe(
-      tap(() => {
+      tap((data) => {
+        this.users.set(data);
+        if (data && data.length > 0) {
+          this.currentUser.set(data[0]);
+        }
         // 4. Correction ici : setTimeout prend un nombre, pas "800ms"
         setTimeout(() => {
            this.isProfileLoaded.set(true);
