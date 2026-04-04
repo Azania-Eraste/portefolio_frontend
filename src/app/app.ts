@@ -15,11 +15,11 @@ import { BackgroundEffectComponent } from './components/ui/background-effect/bac
   styleUrls: ['./app.scss']
 })
 export class AppComponent implements OnInit {
-  // 1. On injecte le service dans une variable PUBLIQUE
   public userService = inject(S_UserService);
 
   mouseX = 0;
   mouseY = 0;
+  currentYear = new Date().getFullYear();
 
   ngOnInit() {
     // Charge les données utilisateur au démarrage de l'application

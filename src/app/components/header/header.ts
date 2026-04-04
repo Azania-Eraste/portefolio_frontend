@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, HostListener, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 
@@ -10,14 +10,26 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrls: ['./header.scss']
 })
 export class HeaderComponent {
-  // Signal pour gérer l'ouverture du menu sur mobile
   isMobileMenuOpen = signal<boolean>(false);
+  isScrolled = signal<boolean>(false);
+
+  navLinks = [
+    { path: '/', label: './home', exact: true },
+    { path: '/projets', label: './projects.sh', exact: false },
+    { path: '/experiences', label: './career.log', exact: false },
+    { path: '/skills', label: './skills', exact: false },
+    { path: '/contact', label: './contact', exact: false },
+  ];
+
+  @HostListener('window:scroll')
+  onScroll() {
+    this.isScrolled.set(window.scrollY > 20);
+  }
 
   toggleMenu() {
     this.isMobileMenuOpen.update(val => !val);
   }
 
-  // Ferme le menu quand on clique sur un lien (UX mobile)
   closeMenu() {
     this.isMobileMenuOpen.set(false);
   }

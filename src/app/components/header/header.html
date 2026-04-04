@@ -1,98 +1,63 @@
-<header class="fixed top-0 left-0 w-full z-50 bg-transparent/95 backdrop-blur-sm border-b border-gray-800 font-mono text-sm">
-  
+<header class="fixed top-0 left-0 w-full z-50 transition-all duration-500"
+  [class.header-scrolled]="isScrolled()"
+  [class.header-top]="!isScrolled()">
+
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <div class="flex items-center justify-between h-16">
-      
-      <div class="flex-shrink-0">
-        <a routerLink="/" class="text-xl font-bold tracking-tighter hover:text-geek-green transition-colors">
-          <span class="text-geek-green">~/</span>portfolio
-        </a>
-      </div>
 
-      <div class="hidden md:block">
-        <div class="ml-10 flex items-baseline space-x-8">
-          
-          <a routerLink="/" 
-             routerLinkActive="text-geek-green border-b border-geek-green" 
-             [routerLinkActiveOptions]="{exact: true}"
-             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
-             ./home
+      <!-- Logo -->
+      <a routerLink="/" class="group flex items-center gap-1 text-xl font-bold tracking-tighter transition-colors duration-300">
+        <span class="text-geek-green group-hover:text-glow-green transition-all duration-300">~/</span>
+        <span class="text-white group-hover:text-geek-green transition-colors duration-300">portfolio</span>
+        <span class="w-2 h-5 bg-geek-green/80 ml-1 animate-typing-cursor"></span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <nav class="hidden md:flex items-center gap-1">
+        @for (link of navLinks; track link.path) {
+          <a [routerLink]="link.path"
+             routerLinkActive="nav-active"
+             [routerLinkActiveOptions]="{exact: link.exact}"
+             class="nav-link relative px-4 py-2 text-sm text-gray-400 hover:text-white transition-all duration-300 rounded-lg group">
+            <span class="relative z-10 font-mono">{{ link.label }}</span>
+            <span class="absolute inset-0 bg-white/[0.03] rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300"></span>
           </a>
+        }
+      </nav>
 
-          <a routerLink="/projets" 
-             routerLinkActive="text-geek-green border-b border-geek-green"
-             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
-             ./projects.sh
-          </a>
-
-          <a routerLink="/experiences" 
-             routerLinkActive="text-geek-green border-b border-geek-green"
-             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
-             ./career.log
-          </a>
-
-          <a routerLink="/skills" 
-             routerLinkActive="text-geek-green border-b border-geek-green"
-             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
-             ./skills
-          </a>
-
-          <a routerLink="/contact" 
-             routerLinkActive="text-geek-blue border-b border-geek-blue"
-             class="text-gray-400 hover:text-white px-1 py-2 transition-all duration-300">
-                ./contact
-          </a>
-
+      <!-- Mobile Toggle -->
+      <button (click)="toggleMenu()"
+        class="md:hidden relative w-10 h-10 flex items-center justify-center text-geek-green hover:text-white transition-colors focus:outline-none">
+        <span class="sr-only">Open menu</span>
+        <div class="flex flex-col gap-1.5 transition-all duration-300"
+             [class.rotate-menu-open]="isMobileMenuOpen()">
+          <span class="block w-6 h-0.5 bg-current transition-all duration-300"
+                [class.translate-y-2]="isMobileMenuOpen()" [class.rotate-45]="isMobileMenuOpen()"></span>
+          <span class="block w-4 h-0.5 bg-current transition-all duration-300"
+                [class.opacity-0]="isMobileMenuOpen()"></span>
+          <span class="block w-6 h-0.5 bg-current transition-all duration-300"
+                [class.-translate-y-2]="isMobileMenuOpen()" [class.-rotate-45]="isMobileMenuOpen()"></span>
         </div>
-      </div>
+      </button>
 
-      <div class="-mr-2 flex md:hidden">
-        <button (click)="toggleMenu()" class="inline-flex items-center justify-center p-2 text-geek-green hover:text-white focus:outline-none">
-          <span class="sr-only">Open menu</span>
-          <span class="text-xl font-bold">
-            {{ isMobileMenuOpen() ? '[ X ]' : '[ = ]' }}
-          </span>
-        </button>
-      </div>
     </div>
   </div>
 
+  <!-- Mobile Menu -->
   @if (isMobileMenuOpen()) {
-    <div class="md:hidden bg-geek-gray border-b border-geek-dim-green">
-      <div class="px-2 pt-2 pb-3 space-y-1 sm:px-3">
-        
-        <a routerLink="/" (click)="closeMenu()"
-           routerLinkActive="text-geek-green bg-black/30"
-           [routerLinkActiveOptions]="{exact: true}"
-           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-           > cd ./home
-        </a>
-
-        <a routerLink="/projets" (click)="closeMenu()"
-           routerLinkActive="text-geek-green bg-black/30"
-           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-           > ./execute_projects.sh
-        </a>
-
-        <a routerLink="/experiences" (click)="closeMenu()"
-           routerLinkActive="text-geek-green bg-black/30"
-           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-           > cat ./career.log
-        </a>
-
-        <a routerLink="/skills" (click)="closeMenu()"
-           routerLinkActive="text-geek-green bg-black/30"
-           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-           > ./skills
-        </a>
-
-        <a routerLink="/contact" (click)="closeMenu()"
-           routerLinkActive="text-geek-blue bg-black/30"
-           class="text-gray-300 hover:text-white block px-3 py-2 rounded-md text-base font-medium">
-           > query ./contact
-        </a>
-
-      </div>
+    <div class="md:hidden animate-fade-in-down border-t border-geek-border/50"
+         style="background: rgba(10, 10, 10, 0.95); backdrop-filter: blur(20px);">
+      <nav class="px-4 py-4 space-y-1">
+        @for (link of navLinks; track link.path) {
+          <a [routerLink]="link.path" (click)="closeMenu()"
+             routerLinkActive="text-geek-green bg-geek-green/5"
+             [routerLinkActiveOptions]="{exact: link.exact}"
+             class="flex items-center gap-3 px-4 py-3 text-gray-300 hover:text-white rounded-lg transition-all duration-300 hover:bg-white/5">
+            <span class="text-geek-dim-green font-mono text-xs">></span>
+            <span class="font-mono text-sm">{{ link.label }}</span>
+          </a>
+        }
+      </nav>
     </div>
   }
 </header>

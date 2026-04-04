@@ -1,10 +1,22 @@
 <div class="loading-container">
-  <div class="glitch-wrapper">
-    <h1 class="glitch text-4xl md:text-6xl font-mono font-bold text-green-500" data-text="INITIALIZING SYSTEM...">
-      INITIALIZING SYSTEM...
-    </h1>
-    <p class="mt-4 font-mono text-green-400 text-sm animate-pulse">
-      > Loading assets from secure server_ <span class="blinking-cursor">█</span>
+  <div class="loading-content">
+    <!-- Logo/Glitch Text -->
+    <div class="glitch-wrapper">
+      <h1 class="glitch text-3xl md:text-5xl font-mono font-bold text-white" data-text="INITIALIZING...">
+        INITIALIZING...
+      </h1>
+    </div>
+
+    <!-- Progress Bar -->
+    <div class="mt-8 w-64 md:w-80">
+      <div class="h-0.5 bg-gray-800 rounded-full overflow-hidden">
+        <div class="h-full bg-gradient-to-r from-geek-green to-geek-blue rounded-full loading-bar"></div>
+      </div>
+    </div>
+
+    <!-- Status Text -->
+    <p class="mt-5 font-mono text-gray-500 text-xs tracking-widest">
+      > loading assets<span class="blinking-cursor">_</span>
     </p>
   </div>
 </div>

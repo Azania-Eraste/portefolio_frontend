@@ -1,0 +1,33 @@
+:host {
+  display: block;
+}
+
+.header-top {
+  background: transparent;
+}
+
+.header-scrolled {
+  background: rgba(10, 10, 10, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(30, 35, 48, 0.5);
+}
+
+.nav-link {
+  &.nav-active {
+    color: #00ff41;
+
+    &::after {
+      content: '';
+      position: absolute;
+      bottom: 4px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 20px;
+      height: 2px;
+      background: #00ff41;
+      border-radius: 1px;
+      box-shadow: 0 0 8px rgba(0, 255, 65, 0.5);
+    }
+  }
+}

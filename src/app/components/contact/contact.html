@@ -1,97 +1,116 @@
-<div class="min-h-screen bg-transparent p-6 md:p-12 font-mono text-gray-300 flex flex-col items-center">
+<section class="min-h-screen bg-transparent p-6 md:p-12 font-mono text-gray-300 flex flex-col items-center">
 
   <div class="w-full max-w-2xl">
-    
-    <div class="mb-10 border-b border-geek-dim-blue pb-4">
-      <h2 class="text-3xl text-geek-blue font-bold mb-2">
-        <span class="animate-pulse">></span> ./SEND_MESSAGE.EXE
-      </h2>
-      <p class="text-sm text-gray-500">Initialisation du protocole de communication...</p>
+
+    <!-- Page Header -->
+    <div class="mb-10 opacity-0 animate-fade-in-up">
+      <div class="flex items-center gap-3 mb-3">
+        <div class="w-3 h-3 rounded-full bg-geek-blue/30 border border-geek-blue animate-pulse"></div>
+        <h2 class="text-3xl md:text-4xl text-white font-bold tracking-tight">
+          Contact
+        </h2>
+      </div>
+      <p class="text-sm text-gray-500 ml-6">
+        <span class="text-geek-dim-blue">></span> ./send_message.exe
+      </p>
+      <div class="gradient-line-blue mt-4"></div>
     </div>
 
+    <!-- Status Messages -->
     @if (submitStatus() === 'SUCCESS') {
-      <div class="mb-6 p-4 border border-geek-blue bg-geek-blue/10 text-geek-blue rounded">
-        > SUCCESS: Packet delivered to server. End of transmission.
+      <div class="mb-8 p-5 neon-border-blue bg-geek-blue/5 rounded-xl animate-fade-in-up">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-geek-blue flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+          </svg>
+          <span class="text-geek-blue text-sm">Message transmis avec succes. Fin de transmission.</span>
+        </div>
       </div>
     }
 
     @if (submitStatus() === 'ERROR') {
-      <div class="mb-6 p-4 border border-red-500 bg-red-900/10 text-red-500 rounded">
-        > ERROR: Connection refused or server unreachable. Try again later.
+      <div class="mb-8 p-5 border border-red-500/30 bg-red-500/5 rounded-xl animate-fade-in-up">
+        <div class="flex items-center gap-3">
+          <svg class="w-5 h-5 text-red-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+          <span class="text-red-400 text-sm">Erreur de connexion. Reessayez plus tard.</span>
+        </div>
       </div>
     }
 
-    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6">
-      
-      <div class="flex flex-col space-y-2">
-        <label class="text-xs uppercase tracking-widest text-geek-dim-blue">Identity (Name)</label>
-        <input 
+    <!-- Form -->
+    <form [formGroup]="contactForm" (ngSubmit)="onSubmit()" class="space-y-6 opacity-0 animate-fade-in-up stagger-1">
+
+      <div class="flex flex-col gap-2">
+        <label class="text-xs uppercase tracking-widest text-gray-500 font-sans">Nom complet</label>
+        <input
           formControlName="nom_complet"
-          type="text" 
-          class="bg-geek-gray border border-gray-700 p-3 text-white focus:outline-none focus:border-geek-blue focus:shadow-[0_0_10px_rgba(0,243,255,0.3)] transition-all duration-300"
-          placeholder="Entrez votre nom..."
+          type="text"
+          class="bg-geek-surface/60 border border-geek-border rounded-lg p-4 text-white font-sans focus:border-geek-blue/50 focus:shadow-[0_0_15px_rgba(0,243,255,0.1)] transition-all duration-300"
+          placeholder="Votre nom..."
         >
         @if (contactForm.get('nom_complet')?.invalid && contactForm.get('nom_complet')?.touched) {
-          <span class="text-red-500 text-xs">> Error: Identity required.</span>
+          <span class="text-red-400 text-xs font-sans">Nom requis (min. 2 caracteres)</span>
         }
       </div>
 
-      <div class="flex flex-col space-y-2">
-        <label class="text-xs uppercase tracking-widest text-geek-dim-blue">Return Address (Email)</label>
-        <input 
+      <div class="flex flex-col gap-2">
+        <label class="text-xs uppercase tracking-widest text-gray-500 font-sans">Email</label>
+        <input
           formControlName="email"
-          type="email" 
-          class="bg-geek-gray border border-gray-700 p-3 text-white focus:outline-none focus:border-geek-blue focus:shadow-[0_0_10px_rgba(0,243,255,0.3)] transition-all duration-300"
-          placeholder="user@example.com"
+          type="email"
+          class="bg-geek-surface/60 border border-geek-border rounded-lg p-4 text-white font-sans focus:border-geek-blue/50 focus:shadow-[0_0_15px_rgba(0,243,255,0.1)] transition-all duration-300"
+          placeholder="votre@email.com"
         >
         @if (contactForm.get('email')?.invalid && contactForm.get('email')?.touched) {
-          <span class="text-red-500 text-xs">> Error: Invalid protocol (Email).</span>
+          <span class="text-red-400 text-xs font-sans">Email invalide</span>
         }
       </div>
 
-      <div class="flex flex-col space-y-2">
-        <label class="text-xs uppercase tracking-widest text-geek-dim-blue">Subject</label>
-        <input 
+      <div class="flex flex-col gap-2">
+        <label class="text-xs uppercase tracking-widest text-gray-500 font-sans">Sujet</label>
+        <input
           formControlName="objet"
-          type="text" 
-          class="bg-geek-gray border border-gray-700 p-3 text-white focus:outline-none focus:border-geek-blue focus:shadow-[0_0_10px_rgba(0,243,255,0.3)] transition-all duration-300"
+          type="text"
+          class="bg-geek-surface/60 border border-geek-border rounded-lg p-4 text-white font-sans focus:border-geek-blue/50 focus:shadow-[0_0_15px_rgba(0,243,255,0.1)] transition-all duration-300"
           placeholder="Proposition de mission..."
         >
       </div>
 
-      <div class="flex flex-col space-y-2">
-        <label class="text-xs uppercase tracking-widest text-geek-dim-blue">Payload (Message)</label>
-        <textarea 
+      <div class="flex flex-col gap-2">
+        <label class="text-xs uppercase tracking-widest text-gray-500 font-sans">Message</label>
+        <textarea
           formControlName="message"
           rows="6"
-          class="bg-geek-gray border border-gray-700 p-3 text-white focus:outline-none focus:border-geek-blue focus:shadow-[0_0_10px_rgba(0,243,255,0.3)] transition-all duration-300 resize-none"
-          placeholder="Écrivez votre message ici..."
+          class="bg-geek-surface/60 border border-geek-border rounded-lg p-4 text-white font-sans focus:border-geek-blue/50 focus:shadow-[0_0_15px_rgba(0,243,255,0.1)] transition-all duration-300 resize-none"
+          placeholder="Votre message..."
         ></textarea>
         @if (contactForm.get('message')?.invalid && contactForm.get('message')?.touched) {
-          <span class="text-red-500 text-xs">> Error: Payload empty or too short.</span>
+          <span class="text-red-400 text-xs font-sans">Message requis (min. 10 caracteres)</span>
         }
       </div>
 
-      <button 
-        type="submit" 
+      <button
+        type="submit"
         [disabled]="contactForm.invalid || isSending()"
-        class="w-full py-4 border border-geek-blue text-geek-blue font-bold uppercase tracking-widest hover:bg-geek-blue hover:text-black transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed flex justify-center items-center gap-2"
-      >
+        class="w-full py-4 bg-geek-blue/10 border border-geek-blue/50 text-geek-blue font-bold uppercase tracking-widest text-sm rounded-lg hover:bg-geek-blue hover:text-black transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed flex justify-center items-center gap-3">
         @if (isSending()) {
           <span class="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full"></span>
-          UPLOADING...
+          <span>Envoi en cours...</span>
         } @else {
-          [ EXECUTE_SEND ]
+          <span>[ ENVOYER ]</span>
         }
       </button>
-
     </form>
   </div>
-  <div class="w-full max-w-4xl mt-12 mb-12">
-  <div class="mb-4 text-geek-green text-sm font-bold">
-    > TRACEROUTE /LOCATIONS:
-  </div>
 
-  <app-map></app-map>
+  <!-- Map -->
+  <div class="w-full max-w-4xl mt-16 mb-12 opacity-0 animate-fade-in-up stagger-3">
+    <div class="flex items-center gap-2 mb-4">
+      <span class="w-1.5 h-1.5 bg-geek-green rounded-full animate-pulse"></span>
+      <span class="text-xs text-gray-600 font-mono uppercase tracking-wider">Localisation</span>
+    </div>
+    <app-map></app-map>
   </div>
-</div>
+</section>

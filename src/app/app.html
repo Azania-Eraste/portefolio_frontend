@@ -6,8 +6,24 @@
 
 <app-header></app-header>
 
-<main class="pt-16 min-h-screen">
+<main class="pt-16 min-h-screen relative">
   <router-outlet></router-outlet>
-  
+
   <div class="custom-cursor" [style.left.px]="mouseX" [style.top.px]="mouseY"></div>
 </main>
+
+<!-- Footer -->
+<footer class="relative border-t border-geek-border/50 py-8 px-6">
+  <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4 text-xs font-mono text-gray-600">
+    <div class="flex items-center gap-2">
+      <span class="w-2 h-2 bg-geek-green rounded-full animate-pulse"></span>
+      <span>SYSTEM_STATUS: ONLINE</span>
+    </div>
+    <div class="text-gray-500">
+      &copy; {{ currentYear }} <span class="text-geek-green">Azania Eraste</span> &mdash; All rights reserved.
+    </div>
+    <div class="text-gray-600">
+      v2.0.0 // Built with Angular
+    </div>
+  </div>
+</footer>
