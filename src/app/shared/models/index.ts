@@ -8,3 +8,4 @@ export * from './I_Social.model';
 export * from './I_Contact.model';
 export * from './I_Language.model';
 export * from './I_Competence.model';
+export * from './I_Paginated.model';

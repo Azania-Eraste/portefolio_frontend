@@ -101,11 +101,12 @@ export class HomeComponent implements OnInit {
 
     // Sinon, charge depuis l'API
     this.api.getProfile().subscribe({
-      next: (users) => {
-        if (users && users.length > 0) {
-          const profile = users[1];
+      next: () => {
+        // getProfile() a déjà mis à jour le signal currentUser du service
+        // (il choisit le bon utilisateur parmi la liste paginée)
+        const profile = this.api.currentUser();
+        if (profile) {
           console.log('Profil utilisateur chargé:', profile);
-          
 
           this.user.set(profile);
           this.typedText.set('');

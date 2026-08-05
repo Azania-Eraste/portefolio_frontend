@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Api } from '../based/api';
-import { IExperience } from '../models';
+import { IExperience, IPaginatedResponse } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,6 +12,8 @@ export class S_ExperienceService {
   private endpoint = `${Api.url}/experiences/`;
 
   getAllExperiences(): Observable<IExperience[]> {
-    return this.http.get<IExperience[]>(this.endpoint);
+    return this.http.get<IPaginatedResponse<IExperience>>(this.endpoint).pipe(
+      map((response) => response.results)
+    );
   }
 }

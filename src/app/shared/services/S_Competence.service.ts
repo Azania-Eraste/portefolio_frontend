@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Api } from '../based/api';
-import { ICompetence } from '../models';
+import { ICompetence, IPaginatedResponse } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -12,7 +12,9 @@ export class S_CompetenceService {
   private endpoint = `${Api.url}/competences/`;
 
   getAllCompetences(): Observable<ICompetence[]> {
-    return this.http.get<ICompetence[]>(this.endpoint);
+    return this.http.get<IPaginatedResponse<ICompetence>>(this.endpoint).pipe(
+      map((response) => response.results)
+    );
   }
 
   getCompetenceById(id: number): Observable<ICompetence> {
@@ -21,12 +23,16 @@ export class S_CompetenceService {
 
   // Filtrer par catégorie
   getCompetencesByCategory(category: string): Observable<ICompetence[]> {
-    return this.http.get<ICompetence[]>(`${this.endpoint}?categorie=${category}`);
+    return this.http.get<IPaginatedResponse<ICompetence>>(`${this.endpoint}?categorie=${category}`).pipe(
+      map((response) => response.results)
+    );
   }
 
   // Filtrer par niveau
   getCompetencesByLevel(level: string): Observable<ICompetence[]> {
-    return this.http.get<ICompetence[]>(`${this.endpoint}?niveau=${level}`);
+    return this.http.get<IPaginatedResponse<ICompetence>>(`${this.endpoint}?niveau=${level}`).pipe(
+      map((response) => response.results)
+    );
   }
 
   // Récupérer les catégories disponibles

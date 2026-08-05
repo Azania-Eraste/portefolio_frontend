@@ -1,8 +1,8 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { Api } from '../based/api';
-import { ILocalisation } from '../models';
+import { ILocalisation, IPaginatedResponse } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -10,10 +10,12 @@ import { ILocalisation } from '../models';
 export class S_LocalisationService {
   private http = inject(HttpClient);
   // Assure-toi que cette URL existe dans ton urls.py Django
-  private endpoint = `${Api.url}/localisations/`; 
+  private endpoint = `${Api.url}/localisations/`;
 
   getAllLocalisations(): Observable<ILocalisation[]> {
-    return this.http.get<ILocalisation[]>(this.endpoint);
+    return this.http.get<IPaginatedResponse<ILocalisation>>(this.endpoint).pipe(
+      map((response) => response.results)
+    );
   }
 
   // Optionnel : Récupérer une loc précise par ID

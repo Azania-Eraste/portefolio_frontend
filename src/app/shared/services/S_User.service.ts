@@ -1,9 +1,9 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap } from 'rxjs';
+import { Observable, tap, map } from 'rxjs';
 import { Api } from '../based/api'; // Vérifie que c'est le bon fichier pour l'URL
 // Assure-toi d'importer le bon modèle (Utilisateur ou IUser selon ton fichier models)
-import { IUser } from '../models'; 
+import { IUser, IPaginatedResponse } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -24,11 +24,16 @@ export class S_UserService {
 
   getProfile(): Observable<IUser[]> {
     // On utilise this.endpoint pour être propre
-    return this.http.get<IUser[]>(this.endpoint).pipe(
+    // L'API DRF pagine les listes ({count, next, previous, results}) : on extrait "results"
+    return this.http.get<IPaginatedResponse<IUser>>(this.endpoint).pipe(
+      map((response) => response.results),
       tap((data) => {
         this.users.set(data);
         if (data && data.length > 0) {
-          this.currentUser.set(data[0]);
+          // Le premier compte (superuser Django) a souvent un profil vide ;
+          // on privilégie le premier utilisateur dont le profil est renseigné.
+          const profile = data.find((u) => u.first_name || u.last_name) ?? data[0];
+          this.currentUser.set(profile);
         }
         // 4. Correction ici : setTimeout prend un nombre, pas "800ms"
         setTimeout(() => {
