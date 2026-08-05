@@ -18,18 +18,16 @@
   <div class="flex flex-wrap gap-2 mb-10 opacity-0 animate-fade-in-up stagger-1">
     <button
       (click)="setCategory('ALL')"
-      [class]="activeCategory() === 'ALL'
-        ? 'px-4 py-2 bg-geek-green/10 border border-geek-green/50 text-geek-green rounded-lg text-xs font-medium transition-all duration-300'
-        : 'px-4 py-2 bg-transparent border border-geek-border text-gray-400 hover:border-gray-500 hover:text-white rounded-lg text-xs font-medium transition-all duration-300'">
+      class="filter-chip"
+      [class.filter-chip-active]="activeCategory() === 'ALL'">
       ALL
     </button>
 
     @for (category of categories(); track category.key) {
       <button
         (click)="setCategory(category.key)"
-        [class]="activeCategory() === category.key
-          ? 'px-4 py-2 bg-geek-green/10 border border-geek-green/50 text-geek-green rounded-lg text-xs font-medium transition-all duration-300'
-          : 'px-4 py-2 bg-transparent border border-geek-border text-gray-400 hover:border-gray-500 hover:text-white rounded-lg text-xs font-medium transition-all duration-300'">
+        class="filter-chip"
+        [class.filter-chip-active]="activeCategory() === category.key">
         {{ category.label }}
       </button>
     }

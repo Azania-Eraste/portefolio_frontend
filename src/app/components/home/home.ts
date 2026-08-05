@@ -152,18 +152,20 @@ export class HomeComponent implements OnInit {
     });
   }
 
+  // Retourne une clé d'icône (utilisée par le @switch dans home.html) plutôt
+  // qu'un emoji : rendu cohérent entre OS/navigateurs, contrairement aux emojis.
   getSocialIcon(platform: string): string {
     const platformLower = platform.toLowerCase();
-    
-    if (platformLower.includes('linkedin')) return '💼';
-    if (platformLower.includes('github')) return '🐙';
-    if (platformLower.includes('twitter') || platformLower.includes('x.com')) return '🐦';
-    if (platformLower.includes('facebook')) return '👤';
-    if (platformLower.includes('instagram')) return '📷';
-    if (platformLower.includes('youtube')) return '▶️';
-    if (platformLower.includes('portfolio') || platformLower.includes('website')) return '🌐';
-    if (platformLower.includes('email') || platformLower.includes('mail')) return '✉️';
-    
-    return '🔗';
+
+    if (platformLower.includes('linkedin')) return 'linkedin';
+    if (platformLower.includes('github')) return 'github';
+    if (platformLower.includes('twitter') || platformLower.includes('x.com')) return 'twitter';
+    if (platformLower.includes('facebook')) return 'facebook';
+    if (platformLower.includes('instagram')) return 'instagram';
+    if (platformLower.includes('youtube')) return 'youtube';
+    if (platformLower.includes('portfolio') || platformLower.includes('website')) return 'web';
+    if (platformLower.includes('email') || platformLower.includes('mail')) return 'email';
+
+    return 'link';
   }
 }

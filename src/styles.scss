@@ -3,6 +3,22 @@
 @tailwind utilities;
 @import 'leaflet/dist/leaflet.css';
 
+/* ========== DESIGN TOKENS ========== */
+/* Source unique de vérité pour la palette "terminal" : réutilisée dans tous
+   les .scss de composants pour éviter la dérive des couleurs en dur. */
+:root {
+  --geek-black: #0a0a0a;
+  --geek-gray: #1a1a1a;
+  --geek-green: #00ff41;
+  --geek-dim-green: #008f11;
+  --geek-blue: #00f3ff;
+  --geek-dim-blue: #0891b2;
+  --geek-surface: #111318;
+  --geek-border: #1e2330;
+
+  --ease-standard: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* ========== BASE RESET & SMOOTH SCROLL ========== */
 html {
   scroll-behavior: smooth;
@@ -26,7 +42,13 @@ h1, h2, h3, .techno-badge, .font-mono {
 
 p, span, li, label {
   font-family: 'Inter', sans-serif;
-  font-weight: 300;
+  /* 400 plutôt que 300 : à cette taille et sur fond sombre, le poids "light"
+     dégrade la lisibilité, surtout sur écrans non-Retina. */
+  font-weight: 400;
+}
+
+p {
+  line-height: 1.6;
 }
 
 /* ========== SELECTION ========== */
@@ -92,11 +114,20 @@ p, span, li, label {
 }
 
 /* ========== CUSTOM CURSOR ========== */
-body {
-  cursor: none;
+/* Uniquement sur les pointeurs fins avec hover réel (souris/trackpad) :
+   sur tactile/hybride, un curseur natif désactivé casse l'interaction. */
+@media (hover: hover) and (pointer: fine) {
+  body {
+    cursor: none;
+  }
+
+  .custom-cursor {
+    display: block;
+  }
 }
 
 .custom-cursor {
+  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -108,8 +139,8 @@ body {
   transform: translate(-50%, -50%);
   z-index: 9999;
   mix-blend-mode: difference;
-  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1),
-              height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: width 0.3s var(--ease-standard),
+              height 0.3s var(--ease-standard);
 }
 
 a:hover ~ .custom-cursor,
@@ -242,12 +273,132 @@ router-outlet + * {
 }
 
 /* ========== FOCUS STYLES ========== */
+/* Les inputs gardent leur propre style de focus (bordure + glow, voir
+   contact.html). Le reset ci-dessous ne s'applique qu'à eux, jamais
+   globalement, pour ne pas priver le reste du site de :focus-visible. */
 input:focus, textarea:focus {
   outline: none;
 }
 
+a, button, [tabindex]:not([tabindex="-1"]) {
+  &:focus-visible {
+    outline: 2px solid rgba(0, 255, 65, 0.8);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+input:focus-visible, textarea:focus-visible {
+  outline: none;
+}
+
+/* ========== BUTTONS ========== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  padding: 0.9rem 1.75rem;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  border-radius: 0.5rem;
+  border: 1px solid transparent;
+  transition: all 0.3s var(--ease-standard);
+  cursor: pointer;
+
+  &:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+  }
+}
+
+.btn-primary {
+  color: var(--geek-green);
+  background: rgba(0, 255, 65, 0.1);
+  border-color: rgba(0, 255, 65, 0.5);
+
+  &:hover:not(:disabled) {
+    background: var(--geek-green);
+    color: #000;
+  }
+}
+
+.btn-primary-blue {
+  color: var(--geek-blue);
+  background: rgba(0, 243, 255, 0.1);
+  border-color: rgba(0, 243, 255, 0.5);
+
+  &:hover:not(:disabled) {
+    background: var(--geek-blue);
+    color: #000;
+  }
+}
+
+.btn-outline {
+  color: #9ca3af; // gray-400
+  background: transparent;
+  border-color: #374151; // gray-700
+
+  &:hover:not(:disabled) {
+    color: #fff;
+    border-color: #9ca3af;
+  }
+}
+
+/* ========== FILTER CHIPS ========== */
+.filter-chip {
+  padding: 0.55rem 1.1rem;
+  font-size: 0.8rem;
+  font-weight: 500;
+  border-radius: 0.5rem;
+  border: 1px solid var(--geek-border);
+  color: #9ca3af;
+  background: transparent;
+  transition: all 0.3s var(--ease-standard);
+  cursor: pointer;
+
+  &:hover {
+    border-color: #6b7280;
+    color: #fff;
+  }
+}
+
+.filter-chip-active {
+  color: var(--geek-green);
+  background: rgba(0, 255, 65, 0.1);
+  border-color: rgba(0, 255, 65, 0.5);
+
+  &:hover {
+    color: var(--geek-green);
+    border-color: rgba(0, 255, 65, 0.5);
+  }
+}
+
+/* ========== ACCESSIBILITÉ : MOTION RÉDUITE ========== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Les éléments qui n'existent que pour l'animation (curseur clignotant,
+     scanline...) restent visibles sans clignoter/glisser à l'infini. */
+  .animate-typing-cursor, .blinking-cursor {
+    animation: none !important;
+    opacity: 1 !important;
+  }
+}
+
 /* ========== RESPONSIVE HELPERS ========== */
 @media (max-width: 768px) {
+  /* Le curseur custom est déjà géré par @media (hover: hover) and
+     (pointer: fine) plus haut ; ceci ne fait que garantir un curseur
+     natif utilisable sur mobile même si un navigateur rapporte
+     pointer: fine à tort (stylet, certaines tablettes). */
   body {
     cursor: auto;
   }

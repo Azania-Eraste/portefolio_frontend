@@ -94,7 +94,7 @@
       <button
         type="submit"
         [disabled]="contactForm.invalid || isSending()"
-        class="w-full py-4 bg-geek-blue/10 border border-geek-blue/50 text-geek-blue font-bold uppercase tracking-widest text-sm rounded-lg hover:bg-geek-blue hover:text-black transition-all duration-300 disabled:opacity-30 disabled:cursor-not-allowed flex justify-center items-center gap-3">
+        class="btn btn-primary-blue w-full uppercase tracking-widest">
         @if (isSending()) {
           <span class="animate-spin h-4 w-4 border-2 border-current border-t-transparent rounded-full"></span>
           <span>Envoi en cours...</span>

@@ -9,9 +9,8 @@
   animation: scan 4s linear infinite;
 }
 
-.text-glow-green {
-  text-shadow: 0 0 20px rgba(0, 255, 65, 0.3), 0 0 60px rgba(0, 255, 65, 0.1);
-}
+/* .text-glow-green est définie globalement dans styles.scss :
+   pas de redéfinition ici pour éviter deux sources de vérité. */
 
 .profile-glow {
   box-shadow: 0 0 20px rgba(0, 255, 65, 0.15);
