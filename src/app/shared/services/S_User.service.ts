@@ -1,9 +1,9 @@
 import { Injectable, inject, signal } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable, tap, map } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { Api } from '../based/api'; // Vérifie que c'est le bon fichier pour l'URL
 // Assure-toi d'importer le bon modèle (Utilisateur ou IUser selon ton fichier models)
-import { IUser, IPaginatedResponse } from '../models';
+import { IUser } from '../models';
 
 @Injectable({
   providedIn: 'root'
@@ -22,19 +22,15 @@ export class S_UserService {
 
   constructor() { }
 
-  getProfile(): Observable<IUser[]> {
-    // On utilise this.endpoint pour être propre
-    // L'API DRF pagine les listes ({count, next, previous, results}) : on extrait "results"
-    return this.http.get<IPaginatedResponse<IUser>>(this.endpoint).pipe(
-      map((response) => response.results),
-      tap((data) => {
-        this.users.set(data);
-        if (data && data.length > 0) {
-          // Le premier compte (superuser Django) a souvent un profil vide ;
-          // on privilégie le premier utilisateur dont le profil est renseigné.
-          const profile = data.find((u) => u.first_name || u.last_name) ?? data[0];
-          this.currentUser.set(profile);
-        }
+  getProfile(): Observable<IUser> {
+    // GET /utilisateurs/ (liste complète : email, téléphone...) est réservé aux
+    // admins côté backend. /utilisateurs/profile/ est l'endpoint public dédié :
+    // il ne renvoie que le profil affiché sur le portfolio, avec des champs
+    // volontairement limités (voir PublicProfileSerializer).
+    return this.http.get<IUser>(`${this.endpoint}profile/`).pipe(
+      tap((profile) => {
+        this.users.set(profile ? [profile] : []);
+        this.currentUser.set(profile);
         // 4. Correction ici : setTimeout prend un nombre, pas "800ms"
         setTimeout(() => {
            this.isProfileLoaded.set(true);
